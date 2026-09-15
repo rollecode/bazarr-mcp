@@ -170,8 +170,27 @@ def render(name: str, method: str, path: str, operation: dict) -> str:
         ident = _param(name)
         if ident in used.values():
             ident = f"{ident}_{suffix}"
+        # Distinct wire names can still snake_case to the same identifier
+        # (Plex has both `viewedAt>` and `viewedAt<`), so keep counting.
+        base, index = ident, 2
+        while ident in used.values():
+            ident = f"{base}_{index}"
+            index += 1
         used[name + suffix] = ident
         return ident
+
+    # A spec can leave a placeholder out of its parameter list (Plex does, for
+    # transcodeType), and the f-string would then name an undefined variable.
+    declared = {p["name"] for p in path_params}
+    for placeholder in re.findall(r"\{([^}]+)\}", path):
+        if placeholder not in declared:
+            path_params.append({
+                "name": placeholder,
+                "in": "path",
+                "required": True,
+                "description": "Path parameter.",
+                "schema": {"type": "string"},
+            })
 
     for param in path_params:
         kind = py_type(param.get("schema"))
