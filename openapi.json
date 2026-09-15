@@ -1,0 +1,2241 @@
+{
+ "openapi": "3.0.2",
+ "info": {
+  "title": "Bazarr API",
+  "version": "1.0.0",
+  "description": "Extracted from Bazarr's flask_restx decorators."
+ },
+ "paths": {
+  "/api/badges": {
+   "get": {
+    "summary": "Get badges count to update the UI",
+    "tags": [
+     "badges"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/episodes/blacklist": {
+   "get": {
+    "summary": "List blacklisted episodes subtitles",
+    "tags": [
+     "blacklist"
+    ],
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "description": "Paging start integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "length",
+      "in": "query",
+      "required": false,
+      "description": "Paging length integer",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Add an episodes subtitles to blacklist",
+    "tags": [
+     "blacklist"
+    ],
+    "parameters": [
+     {
+      "name": "seriesid",
+      "in": "formData",
+      "required": true,
+      "description": "Series ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "episodeid",
+      "in": "formData",
+      "required": true,
+      "description": "Episode ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "provider",
+      "in": "formData",
+      "required": true,
+      "description": "Provider name",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subs_id",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitles ID",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitles language",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subtitles_path",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitles file path",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "delete": {
+    "summary": "Delete an episodes subtitles from blacklist",
+    "tags": [
+     "blacklist"
+    ],
+    "parameters": [
+     {
+      "name": "all",
+      "in": "formData",
+      "required": false,
+      "description": "Empty episodes subtitles blacklist",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "provider",
+      "in": "formData",
+      "required": false,
+      "description": "Provider name",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subs_id",
+      "in": "formData",
+      "required": false,
+      "description": "Subtitles ID",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/episodes": {
+   "get": {
+    "summary": "List episodes metadata for specific series or episodes",
+    "tags": [
+     "episodes"
+    ],
+    "parameters": [
+     {
+      "name": "seriesid[]",
+      "in": "query",
+      "required": false,
+      "description": "Series IDs to list episodes for",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     },
+     {
+      "name": "episodeid[]",
+      "in": "query",
+      "required": false,
+      "description": "Episodes ID to list",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "/api/episodes/subtitles": {
+   "patch": {
+    "summary": "Download an episode subtitles",
+    "tags": [
+     "episodes_subtitles"
+    ],
+    "parameters": [
+     {
+      "name": "seriesid",
+      "in": "formData",
+      "required": true,
+      "description": "Series ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "episodeid",
+      "in": "formData",
+      "required": true,
+      "description": "Episode ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Language code2",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": true,
+      "description": "Forced true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": true,
+      "description": "HI true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Upload an episode subtitles",
+    "tags": [
+     "episodes_subtitles"
+    ],
+    "parameters": [
+     {
+      "name": "seriesid",
+      "in": "formData",
+      "required": true,
+      "description": "Series ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "episodeid",
+      "in": "formData",
+      "required": true,
+      "description": "Episode ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Language code2",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": true,
+      "description": "Forced true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": true,
+      "description": "HI true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "file",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitles file as file upload object",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "delete": {
+    "summary": "Delete an episode subtitles",
+    "tags": [
+     "episodes_subtitles"
+    ],
+    "parameters": [
+     {
+      "name": "seriesid",
+      "in": "formData",
+      "required": true,
+      "description": "Series ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "episodeid",
+      "in": "formData",
+      "required": true,
+      "description": "Episode ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Language code2",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": true,
+      "description": "Forced true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": true,
+      "description": "HI true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "path",
+      "in": "formData",
+      "required": true,
+      "description": "Path of the subtitles file",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/episodes/history": {
+   "get": {
+    "summary": "List episodes history events",
+    "tags": [
+     "history"
+    ],
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "description": "Paging start integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "length",
+      "in": "query",
+      "required": false,
+      "description": "Paging length integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "episodeid",
+      "in": "query",
+      "required": false,
+      "description": "Episode ID",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   }
+  },
+  "/api/episodes/wanted": {
+   "get": {
+    "summary": "List episodes wanted subtitles",
+    "tags": [
+     "wanted"
+    ],
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "description": "Paging start integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "length",
+      "in": "query",
+      "required": false,
+      "description": "Paging length integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "episodeid[]",
+      "in": "query",
+      "required": false,
+      "description": "Episodes ID to list",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "/api/files": {
+   "get": {
+    "summary": "List Bazarr file system content",
+    "tags": [
+     "files"
+    ],
+    "parameters": [
+     {
+      "name": "path",
+      "in": "query",
+      "required": false,
+      "description": "Path to browse",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/files/radarr": {
+   "get": {
+    "summary": "List Radarr file system content",
+    "tags": [
+     "files_radarr"
+    ],
+    "parameters": [
+     {
+      "name": "path",
+      "in": "query",
+      "required": false,
+      "description": "Path to browse",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/files/sonarr": {
+   "get": {
+    "summary": "List Sonarr file system content",
+    "tags": [
+     "files_sonarr"
+    ],
+    "parameters": [
+     {
+      "name": "path",
+      "in": "query",
+      "required": false,
+      "description": "Path to browse",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/history/stats": {
+   "get": {
+    "summary": "Get history statistics",
+    "tags": [
+     "stats"
+    ],
+    "parameters": [
+     {
+      "name": "timeFrame",
+      "in": "query",
+      "required": false,
+      "description": "Timeframe to get stats for. Must be in [\"week\", \"month\", \"trimester\", \"year\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "action",
+      "in": "query",
+      "required": false,
+      "description": "Action type to filter for.",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "provider",
+      "in": "query",
+      "required": false,
+      "description": "Provider name to filter for.",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "language",
+      "in": "query",
+      "required": false,
+      "description": "Language name to filter for",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/jellyfin/test-connection": {
+   "post": {
+    "summary": "Test connection to a Jellyfin server with provided credentials.",
+    "tags": [
+     "endpoints"
+    ],
+    "parameters": [
+     {
+      "name": "url",
+      "in": "formData",
+      "required": true,
+      "description": "Jellyfin server URL",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "apikey",
+      "in": "formData",
+      "required": true,
+      "description": "Jellyfin API key",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/jellyfin/libraries": {
+   "get": {
+    "summary": "List available movie and series libraries from the Jellyfin server.",
+    "tags": [
+     "endpoints"
+    ],
+    "parameters": [
+     {
+      "name": "url",
+      "in": "query",
+      "required": false,
+      "description": "Jellyfin server URL",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "apikey",
+      "in": "query",
+      "required": false,
+      "description": "Jellyfin API key",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/movies/blacklist": {
+   "get": {
+    "summary": "List blacklisted movies subtitles",
+    "tags": [
+     "blacklist"
+    ],
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "description": "Paging start integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "length",
+      "in": "query",
+      "required": false,
+      "description": "Paging length integer",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Add a movies subtitles to blacklist",
+    "tags": [
+     "blacklist"
+    ],
+    "parameters": [
+     {
+      "name": "radarrid",
+      "in": "formData",
+      "required": true,
+      "description": "Radarr ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "provider",
+      "in": "formData",
+      "required": true,
+      "description": "Provider name",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subs_id",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitles ID",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitles language",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subtitles_path",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitles file path",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "delete": {
+    "summary": "Delete a movies subtitles from blacklist",
+    "tags": [
+     "blacklist"
+    ],
+    "parameters": [
+     {
+      "name": "all",
+      "in": "formData",
+      "required": false,
+      "description": "Empty movies subtitles blacklist",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "provider",
+      "in": "formData",
+      "required": false,
+      "description": "Provider name",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subs_id",
+      "in": "formData",
+      "required": false,
+      "description": "Subtitles ID",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/movies/history": {
+   "get": {
+    "summary": "List movies history events",
+    "tags": [
+     "history"
+    ],
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "description": "Paging start integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "length",
+      "in": "query",
+      "required": false,
+      "description": "Paging length integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "radarrid",
+      "in": "query",
+      "required": false,
+      "description": "Movie ID",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   }
+  },
+  "/api/movies": {
+   "get": {
+    "summary": "List movies metadata for specific movies",
+    "tags": [
+     "movies"
+    ],
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "description": "Paging start integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "length",
+      "in": "query",
+      "required": false,
+      "description": "Paging length integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "radarrid[]",
+      "in": "query",
+      "required": false,
+      "description": "Movies IDs to get metadata for",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Update specific movies languages profile",
+    "tags": [
+     "movies"
+    ],
+    "parameters": [
+     {
+      "name": "radarrid",
+      "in": "formData",
+      "required": false,
+      "description": "Radarr movie(s) ID",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     },
+     {
+      "name": "profileid",
+      "in": "formData",
+      "required": false,
+      "description": "Languages profile(s) ID or \"none\"",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    ]
+   },
+   "patch": {
+    "summary": "Run actions on specific movies",
+    "tags": [
+     "movies"
+    ],
+    "parameters": [
+     {
+      "name": "radarrid",
+      "in": "formData",
+      "required": false,
+      "description": "Radarr movie ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "action",
+      "in": "formData",
+      "required": false,
+      "description": "Action to perform from [\"scan-disk\", \"search-missing\", \"search-wanted\", \"sync\"]",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/movies/subtitles": {
+   "patch": {
+    "summary": "Download a movie subtitles",
+    "tags": [
+     "movies_subtitles"
+    ],
+    "parameters": [
+     {
+      "name": "radarrid",
+      "in": "formData",
+      "required": true,
+      "description": "Movie ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Language code2",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": true,
+      "description": "Forced true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": true,
+      "description": "HI true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Upload a movie subtitles",
+    "tags": [
+     "movies_subtitles"
+    ],
+    "parameters": [
+     {
+      "name": "radarrid",
+      "in": "formData",
+      "required": true,
+      "description": "Movie ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Language code2",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": true,
+      "description": "Forced true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": true,
+      "description": "HI true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "file",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitles file as file upload object",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "delete": {
+    "summary": "Delete a movie subtitles",
+    "tags": [
+     "movies_subtitles"
+    ],
+    "parameters": [
+     {
+      "name": "radarrid",
+      "in": "formData",
+      "required": true,
+      "description": "Movie ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Language code2",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": true,
+      "description": "Forced true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": true,
+      "description": "HI true/false as string",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "path",
+      "in": "formData",
+      "required": true,
+      "description": "Path of the subtitles file",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/movies/tags": {
+   "get": {
+    "summary": "List all distinct tags assigned to any movie",
+    "tags": [
+     "tags"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/movies/wanted": {
+   "get": {
+    "summary": "List movies wanted subtitles",
+    "tags": [
+     "wanted"
+    ],
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "description": "Paging start integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "length",
+      "in": "query",
+      "required": false,
+      "description": "Paging length integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "radarrid[]",
+      "in": "query",
+      "required": false,
+      "description": "Movies ID to list",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "/api/plex/oauth/pin": {
+   "post": {
+    "summary": "POST plex/oauth/pin",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": [
+     {
+      "name": "clientId",
+      "in": "formData",
+      "required": false,
+      "description": "Client ID",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "get": {
+    "summary": "GET plex/oauth/pin",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/oauth/pin/{pin_id}/check": {
+   "get": {
+    "summary": "GET plex/oauth/pin/<string:pin_id>/check",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": [
+     {
+      "name": "pin_id",
+      "in": "path",
+      "required": true,
+      "description": "Path parameter.",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/plex/oauth/validate": {
+   "get": {
+    "summary": "GET plex/oauth/validate",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/oauth/servers": {
+   "get": {
+    "summary": "GET plex/oauth/servers",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/oauth/libraries": {
+   "get": {
+    "summary": "GET plex/oauth/libraries",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/oauth/logout": {
+   "post": {
+    "summary": "POST plex/oauth/logout",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/encrypt-apikey": {
+   "post": {
+    "summary": "POST plex/encrypt-apikey",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/apikey": {
+   "post": {
+    "summary": "POST plex/apikey",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": [
+     {
+      "name": "apikey",
+      "in": "formData",
+      "required": true,
+      "description": "API key",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/plex/test-connection": {
+   "post": {
+    "summary": "POST plex/test-connection",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": [
+     {
+      "name": "uri",
+      "in": "formData",
+      "required": true,
+      "description": "Server URI",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "get": {
+    "summary": "GET plex/test-connection",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/select-server": {
+   "get": {
+    "summary": "GET plex/select-server",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   },
+   "post": {
+    "summary": "POST plex/select-server",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": [
+     {
+      "name": "machineIdentifier",
+      "in": "formData",
+      "required": true,
+      "description": "Machine identifier",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "name",
+      "in": "formData",
+      "required": true,
+      "description": "Server name",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "uri",
+      "in": "formData",
+      "required": true,
+      "description": "Connection URI",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "local",
+      "in": "formData",
+      "required": false,
+      "description": "Is local connection",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "connections",
+      "in": "formData",
+      "required": false,
+      "description": "All available connection URIs",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/plex/webhook/create": {
+   "post": {
+    "summary": "POST plex/webhook/create",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/webhook/list": {
+   "get": {
+    "summary": "GET plex/webhook/list",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/plex/webhook/delete": {
+   "post": {
+    "summary": "POST plex/webhook/delete",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": [
+     {
+      "name": "webhook_url",
+      "in": "formData",
+      "required": true,
+      "description": "Webhook URL to delete",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/plex/autopulse/config": {
+   "get": {
+    "summary": "GET plex/autopulse/config",
+    "tags": [
+     "oauth"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/providers": {
+   "get": {
+    "summary": "Get providers status",
+    "tags": [
+     "providers"
+    ],
+    "parameters": [
+     {
+      "name": "history",
+      "in": "query",
+      "required": false,
+      "description": "Provider name for history stats",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Reset providers status",
+    "tags": [
+     "providers"
+    ],
+    "parameters": [
+     {
+      "name": "action",
+      "in": "formData",
+      "required": true,
+      "description": "Action to perform from [\"reset\"]",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/providers/episodes": {
+   "get": {
+    "summary": "Search manually for an episode subtitles",
+    "tags": [
+     "providers_episodes"
+    ],
+    "parameters": [
+     {
+      "name": "episodeid",
+      "in": "query",
+      "required": true,
+      "description": "Episode ID",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Manually download an episode subtitles",
+    "tags": [
+     "providers_episodes"
+    ],
+    "parameters": [
+     {
+      "name": "seriesid",
+      "in": "formData",
+      "required": true,
+      "description": "Series ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "episodeid",
+      "in": "formData",
+      "required": true,
+      "description": "Episode ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": true,
+      "description": "HI subtitles from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": true,
+      "description": "Forced subtitles from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "original_format",
+      "in": "formData",
+      "required": true,
+      "description": "Use original subtitles format from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "provider",
+      "in": "formData",
+      "required": true,
+      "description": "Provider name",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subtitle",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitle ID as returned by GET",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/providers/movies": {
+   "get": {
+    "summary": "Search manually for a movie subtitles",
+    "tags": [
+     "providers_movies"
+    ],
+    "parameters": [
+     {
+      "name": "radarrid",
+      "in": "query",
+      "required": true,
+      "description": "Movie ID",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Manually download a movie subtitles",
+    "tags": [
+     "providers_movies"
+    ],
+    "parameters": [
+     {
+      "name": "radarrid",
+      "in": "formData",
+      "required": true,
+      "description": "Movie ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": true,
+      "description": "HI subtitles from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": true,
+      "description": "Forced subtitles from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "original_format",
+      "in": "formData",
+      "required": true,
+      "description": "Use original subtitles format from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "provider",
+      "in": "formData",
+      "required": true,
+      "description": "Provider name",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subtitle",
+      "in": "formData",
+      "required": true,
+      "description": "Subtitle ID as returned by GET",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/series": {
+   "get": {
+    "summary": "List series metadata for specific series",
+    "tags": [
+     "series"
+    ],
+    "parameters": [
+     {
+      "name": "start",
+      "in": "query",
+      "required": false,
+      "description": "Paging start integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "length",
+      "in": "query",
+      "required": false,
+      "description": "Paging length integer",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "seriesid[]",
+      "in": "query",
+      "required": false,
+      "description": "Series IDs to get metadata for",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Update specific series languages profile",
+    "tags": [
+     "series"
+    ],
+    "parameters": [
+     {
+      "name": "seriesid",
+      "in": "formData",
+      "required": false,
+      "description": "Sonarr series ID",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      }
+     },
+     {
+      "name": "profileid",
+      "in": "formData",
+      "required": false,
+      "description": "Languages profile(s) ID or \"none\"",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    ]
+   },
+   "patch": {
+    "summary": "Run actions on specific series",
+    "tags": [
+     "series"
+    ],
+    "parameters": [
+     {
+      "name": "seriesid",
+      "in": "formData",
+      "required": false,
+      "description": "Sonarr series ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "action",
+      "in": "formData",
+      "required": false,
+      "description": "Action to perform from [\"scan-disk\", \"search-missing\", \"search-wanted\", \"sync\"]",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/series/tags": {
+   "get": {
+    "summary": "List all distinct tags assigned to any series",
+    "tags": [
+     "tags"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/subtitles": {
+   "get": {
+    "summary": "Return available audio and embedded subtitles tracks with external subtitles. Used for manual subsync",
+    "tags": [
+     "subtitles"
+    ],
+    "parameters": [
+     {
+      "name": "subtitlesPath",
+      "in": "query",
+      "required": true,
+      "description": "External subtitles file path",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "sonarrEpisodeId",
+      "in": "query",
+      "required": false,
+      "description": "Sonarr Episode ID",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "radarrMovieId",
+      "in": "query",
+      "required": false,
+      "description": "Radarr Movie ID",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   },
+   "patch": {
+    "summary": "Apply mods/tools on external subtitles",
+    "tags": [
+     "subtitles"
+    ],
+    "parameters": [
+     {
+      "name": "action",
+      "in": "formData",
+      "required": true,
+      "description": "Action from [\"sync\", \"translate\", \"extract\" or mods name]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "language",
+      "in": "formData",
+      "required": true,
+      "description": "Language code2",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "path",
+      "in": "formData",
+      "required": false,
+      "description": "Subtitles file path",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "type",
+      "in": "formData",
+      "required": true,
+      "description": "Media type from [\"episode\", \"movie\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "id",
+      "in": "formData",
+      "required": true,
+      "description": "Media ID (episodeId, radarrId)",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "forced",
+      "in": "formData",
+      "required": false,
+      "description": "Forced subtitles from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "hi",
+      "in": "formData",
+      "required": false,
+      "description": "HI subtitles from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "original_format",
+      "in": "formData",
+      "required": false,
+      "description": "Use original subtitles format from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "reference",
+      "in": "formData",
+      "required": false,
+      "description": "Reference to use for sync from video file track number (a:0) or some subtitles file path",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "max_offset_seconds",
+      "in": "formData",
+      "required": false,
+      "description": "Maximum offset seconds to allow",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "no_fix_framerate",
+      "in": "formData",
+      "required": false,
+      "description": "Don't try to fix framerate from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "gss",
+      "in": "formData",
+      "required": false,
+      "description": "Use Golden-Section Search from [\"True\", \"False\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "subtitles_id",
+      "in": "formData",
+      "required": false,
+      "description": "Subtitles database ID (required for the \"extract\" action)",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   }
+  },
+  "/api/subtitles/contents": {
+   "get": {
+    "summary": "Retrieve subtitle file contents",
+    "tags": [
+     "subtitles_contents"
+    ],
+    "parameters": [
+     {
+      "name": "subtitlePath",
+      "in": "query",
+      "required": true,
+      "description": "Subtitle filepath",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/subtitles/info": {
+   "get": {
+    "summary": "Guessit over subtitles filename",
+    "tags": [
+     "subtitles_info"
+    ],
+    "parameters": [
+     {
+      "name": "filenames[]",
+      "in": "query",
+      "required": true,
+      "description": "Subtitles filenames",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/account": {
+   "post": {
+    "summary": "Login or logout from Bazarr UI when using form login",
+    "tags": [
+     "account"
+    ],
+    "parameters": [
+     {
+      "name": "action",
+      "in": "formData",
+      "required": true,
+      "description": "Action from [\"login\", \"logout\"]",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "username",
+      "in": "formData",
+      "required": false,
+      "description": "Bazarr username",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "password",
+      "in": "formData",
+      "required": false,
+      "description": "Bazarr password",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/announcements": {
+   "get": {
+    "summary": "List announcements relative to Bazarr",
+    "tags": [
+     "announcements"
+    ],
+    "parameters": []
+   },
+   "post": {
+    "summary": "Mark announcement as dismissed",
+    "tags": [
+     "announcements"
+    ],
+    "parameters": [
+     {
+      "name": "hash",
+      "in": "formData",
+      "required": true,
+      "description": "hash of the announcement to dismiss",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/backups": {
+   "get": {
+    "summary": "List backup files",
+    "tags": [
+     "backups"
+    ],
+    "parameters": []
+   },
+   "post": {
+    "summary": "Create a new backup",
+    "tags": [
+     "backups"
+    ],
+    "parameters": []
+   },
+   "patch": {
+    "summary": "Restore a backup file",
+    "tags": [
+     "backups"
+    ],
+    "parameters": [
+     {
+      "name": "filename",
+      "in": "formData",
+      "required": true,
+      "description": "Backups to restore filename",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "delete": {
+    "summary": "Delete a backup file",
+    "tags": [
+     "backups"
+    ],
+    "parameters": [
+     {
+      "name": "filename",
+      "in": "formData",
+      "required": true,
+      "description": "Backups to delete filename",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/health": {
+   "get": {
+    "summary": "List health issues",
+    "tags": [
+     "health"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/system/jobs": {
+   "get": {
+    "summary": "List jobs from the queue",
+    "tags": [
+     "jobs"
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "description": "Job ID to return",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "description": "Job status to return",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Force start, move to top or move to bottom of the queue a specific job",
+    "tags": [
+     "jobs"
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "formData",
+      "required": true,
+      "description": "Job ID act onto",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "action",
+      "in": "formData",
+      "required": true,
+      "description": "Action to perform from [\"force_start\", \"move_top\", \"move_bottom\"]",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "patch": {
+    "summary": "Empty a specific jobs queue",
+    "tags": [
+     "jobs"
+    ],
+    "parameters": [
+     {
+      "name": "queueName",
+      "in": "formData",
+      "required": true,
+      "description": "Jobs queue name to empty",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "delete": {
+    "summary": "Delete a job from the queue",
+    "tags": [
+     "jobs"
+    ],
+    "parameters": [
+     {
+      "name": "id",
+      "in": "formData",
+      "required": true,
+      "description": "Job ID to delete from queue",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/languages": {
+   "get": {
+    "summary": "List languages for history filter or for language filter menu",
+    "tags": [
+     "languages"
+    ],
+    "parameters": [
+     {
+      "name": "history",
+      "in": "query",
+      "required": false,
+      "description": "Language name for history stats",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/languages/profiles": {
+   "get": {
+    "summary": "List languages profiles",
+    "tags": [
+     "languages_profiles"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/system/logs": {
+   "get": {
+    "summary": "List log entries",
+    "tags": [
+     "logs"
+    ],
+    "parameters": []
+   },
+   "delete": {
+    "summary": "Force log rotation and create a new log file",
+    "tags": [
+     "logs"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/system/notifications": {
+   "patch": {
+    "summary": "Test a notifications provider URL",
+    "tags": [
+     "notifications"
+    ],
+    "parameters": [
+     {
+      "name": "url",
+      "in": "formData",
+      "required": true,
+      "description": "Notifications provider URL",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/ping": {
+   "get": {
+    "summary": "Return status and http 200",
+    "tags": [
+     "ping"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/system/releases": {
+   "get": {
+    "summary": "Get Bazarr releases",
+    "tags": [
+     "releases"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/system/searches": {
+   "get": {
+    "summary": "List results from query",
+    "tags": [
+     "searches"
+    ],
+    "parameters": [
+     {
+      "name": "query",
+      "in": "query",
+      "required": true,
+      "description": "Series or movie name to search for",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/settings": {
+   "get": {
+    "summary": "GET system/settings",
+    "tags": [
+     "settings"
+    ],
+    "parameters": []
+   },
+   "post": {
+    "summary": "POST system/settings",
+    "tags": [
+     "settings"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/system/webhooks/test": {
+   "post": {
+    "summary": "Test external webhook connection.",
+    "tags": [
+     "settings"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/system/status": {
+   "get": {
+    "summary": "Return environment information and versions",
+    "tags": [
+     "status"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/system": {
+   "post": {
+    "summary": "Shutdown or restart Bazarr",
+    "tags": [
+     "system"
+    ],
+    "parameters": [
+     {
+      "name": "action",
+      "in": "formData",
+      "required": true,
+      "description": "Action to perform from [\"shutdown\", \"restart\"]",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/system/tasks": {
+   "get": {
+    "summary": "List tasks",
+    "tags": [
+     "tasks"
+    ],
+    "parameters": [
+     {
+      "name": "taskid",
+      "in": "query",
+      "required": false,
+      "description": "List tasks or a single task properties",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   },
+   "post": {
+    "summary": "Run task",
+    "tags": [
+     "tasks"
+    ],
+    "parameters": [
+     {
+      "name": "taskid",
+      "in": "formData",
+      "required": true,
+      "description": "Task id of the task to run",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/webhooks/plex": {
+   "post": {
+    "summary": "Trigger subtitles search on play media event in Plex",
+    "tags": [
+     "plex"
+    ],
+    "parameters": [
+     {
+      "name": "payload",
+      "in": "formData",
+      "required": true,
+      "description": "Webhook payload",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/webhooks/radarr": {
+   "post": {
+    "summary": "Search for missing subtitles based on Radarr webhooks",
+    "tags": [
+     "radarr"
+    ],
+    "parameters": []
+   }
+  },
+  "/api/webhooks/sonarr": {
+   "post": {
+    "summary": "Search for missing subtitles based on Sonarr webhooks",
+    "tags": [
+     "sonarr"
+    ],
+    "parameters": []
+   }
+  }
+ }
+}
