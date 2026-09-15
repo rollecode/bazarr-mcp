@@ -280,15 +280,15 @@ def create_system_account(action: str, username: str | None = None, password: st
 
 
 @mcp.tool(annotations=_WRITE)
-def create_system_announcements(hash_: str) -> str:
+def create_system_announcements(hash: str) -> str:
     """Mark announcement as dismissed.
 
     POST /api/system/announcements
 
     Args:
-        hash_: hash of the announcement to dismiss
+        hash: hash of the announcement to dismiss
     """
-    return call("POST", "/api/system/announcements", query=None, body=None, form={"hash": hash_})
+    return call("POST", "/api/system/announcements", query=None, body=None, form={"hash": hash})
 
 
 @mcp.tool(annotations=_WRITE)
@@ -301,16 +301,16 @@ def create_system_backups() -> str:
 
 
 @mcp.tool(annotations=_WRITE)
-def create_system_jobs(id_: int, action: str) -> str:
+def create_system_jobs(id: int, action: str) -> str:
     """Force start, move to top or move to bottom of the queue a specific job.
 
     POST /api/system/jobs
 
     Args:
-        id_: Job ID act onto
+        id: Job ID act onto
         action: Action to perform from ["force_start", "move_top", "move_bottom"]
     """
-    return call("POST", "/api/system/jobs", query=None, body=None, form={"id": id_, "action": action})
+    return call("POST", "/api/system/jobs", query=None, body=None, form={"id": id, "action": action})
 
 
 @mcp.tool(annotations=_WRITE)
@@ -374,17 +374,17 @@ def create_webhooks_sonarr() -> str:
 
 
 @mcp.tool(annotations=_DESTRUCTIVE)
-def delete_episodes_blacklist(all_: str | None = None, provider: str | None = None, subs_id: str | None = None) -> str:
+def delete_episodes_blacklist(all: str | None = None, provider: str | None = None, subs_id: str | None = None) -> str:
     """Delete an episodes subtitles from blacklist.
 
     DELETE /api/episodes/blacklist
 
     Args:
-        all_: Empty episodes subtitles blacklist
+        all: Empty episodes subtitles blacklist
         provider: Provider name
         subs_id: Subtitles ID
     """
-    return call("DELETE", "/api/episodes/blacklist", query=None, body=None, form={"all": all_, "provider": provider, "subs_id": subs_id})
+    return call("DELETE", "/api/episodes/blacklist", query=None, body=None, form={"all": all, "provider": provider, "subs_id": subs_id})
 
 
 @mcp.tool(annotations=_DESTRUCTIVE)
@@ -405,17 +405,17 @@ def delete_episodes_subtitles(seriesid: int, episodeid: int, language: str, forc
 
 
 @mcp.tool(annotations=_DESTRUCTIVE)
-def delete_movies_blacklist(all_: str | None = None, provider: str | None = None, subs_id: str | None = None) -> str:
+def delete_movies_blacklist(all: str | None = None, provider: str | None = None, subs_id: str | None = None) -> str:
     """Delete a movies subtitles from blacklist.
 
     DELETE /api/movies/blacklist
 
     Args:
-        all_: Empty movies subtitles blacklist
+        all: Empty movies subtitles blacklist
         provider: Provider name
         subs_id: Subtitles ID
     """
-    return call("DELETE", "/api/movies/blacklist", query=None, body=None, form={"all": all_, "provider": provider, "subs_id": subs_id})
+    return call("DELETE", "/api/movies/blacklist", query=None, body=None, form={"all": all, "provider": provider, "subs_id": subs_id})
 
 
 @mcp.tool(annotations=_DESTRUCTIVE)
@@ -447,15 +447,15 @@ def delete_system_backups(filename: str) -> str:
 
 
 @mcp.tool(annotations=_DESTRUCTIVE)
-def delete_system_jobs(id_: int) -> str:
+def delete_system_jobs(id: int) -> str:
     """Delete a job from the queue.
 
     DELETE /api/system/jobs
 
     Args:
-        id_: Job ID to delete from queue
+        id: Job ID to delete from queue
     """
-    return call("DELETE", "/api/system/jobs", query=None, body=None, form={"id": id_})
+    return call("DELETE", "/api/system/jobs", query=None, body=None, form={"id": id})
 
 
 @mcp.tool(annotations=_DESTRUCTIVE)
@@ -867,16 +867,16 @@ def list_system_health() -> str:
 
 
 @mcp.tool(annotations=_READ)
-def list_system_jobs(id_: int | None = None, status: str | None = None) -> str:
+def list_system_jobs(id: int | None = None, status: str | None = None) -> str:
     """List jobs from the queue.
 
     GET /api/system/jobs
 
     Args:
-        id_: Job ID to return
+        id: Job ID to return
         status: Job status to return
     """
-    return call("GET", "/api/system/jobs", query={"id": id_, "status": status}, body=None, form=None)
+    return call("GET", "/api/system/jobs", query={"id": id, "status": status}, body=None, form=None)
 
 
 @mcp.tool(annotations=_READ)
@@ -1027,7 +1027,7 @@ def patch_series(seriesid: int | None = None, action: str | None = None) -> str:
 
 
 @mcp.tool(annotations=_WRITE)
-def patch_subtitles(action: str, language: str, type_: str, id_: int, path: str | None = None, forced: str | None = None, hi: str | None = None, original_format: str | None = None, reference: str | None = None, max_offset_seconds: str | None = None, no_fix_framerate: str | None = None, gss: str | None = None, subtitles_id: int | None = None) -> str:
+def patch_subtitles(action: str, language: str, type: str, id: int, path: str | None = None, forced: str | None = None, hi: str | None = None, original_format: str | None = None, reference: str | None = None, max_offset_seconds: str | None = None, no_fix_framerate: str | None = None, gss: str | None = None, subtitles_id: int | None = None) -> str:
     """Apply mods/tools on external subtitles.
 
     PATCH /api/subtitles
@@ -1036,8 +1036,8 @@ def patch_subtitles(action: str, language: str, type_: str, id_: int, path: str 
         action: Action from ["sync", "translate", "extract" or mods name]
         language: Language code2
         path: Subtitles file path
-        type_: Media type from ["episode", "movie"]
-        id_: Media ID (episodeId, radarrId)
+        type: Media type from ["episode", "movie"]
+        id: Media ID (episodeId, radarrId)
         forced: Forced subtitles from ["True", "False"]
         hi: HI subtitles from ["True", "False"]
         original_format: Use original subtitles format from ["True", "False"]
@@ -1047,7 +1047,7 @@ def patch_subtitles(action: str, language: str, type_: str, id_: int, path: str 
         gss: Use Golden-Section Search from ["True", "False"]
         subtitles_id: Subtitles database ID (required for the "extract" action)
     """
-    return call("PATCH", "/api/subtitles", query=None, body=None, form={"action": action, "language": language, "path": path, "type": type_, "id": id_, "forced": forced, "hi": hi, "original_format": original_format, "reference": reference, "max_offset_seconds": max_offset_seconds, "no_fix_framerate": no_fix_framerate, "gss": gss, "subtitles_id": subtitles_id})
+    return call("PATCH", "/api/subtitles", query=None, body=None, form={"action": action, "language": language, "path": path, "type": type, "id": id, "forced": forced, "hi": hi, "original_format": original_format, "reference": reference, "max_offset_seconds": max_offset_seconds, "no_fix_framerate": no_fix_framerate, "gss": gss, "subtitles_id": subtitles_id})
 
 
 @mcp.tool(annotations=_WRITE)

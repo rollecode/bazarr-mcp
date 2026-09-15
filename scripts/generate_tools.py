@@ -91,9 +91,14 @@ def tool_name(method: str, path: str) -> str:
 
 
 def _param(name: str) -> str:
-    """A safe Python identifier for a parameter, keeping the wire name intact."""
+    """A safe Python identifier for a parameter, keeping the wire name intact.
+
+    Only keywords need escaping. A parameter may shadow a builtin freely --
+    annotations are evaluated in the enclosing scope, where the name is not
+    bound yet -- and `id` reads better to a caller than `id_`.
+    """
     ident = _snake(name)
-    if ident in _RESERVED or not ident.isidentifier():
+    if keyword.iskeyword(ident) or not ident.isidentifier():
         ident = f"{ident}_"
     return ident
 
@@ -140,7 +145,16 @@ def render(name: str, method: str, path: str, operation: dict) -> str:
     # Some APIs take form fields rather than a JSON body; those become named
     # arguments too, sent form-encoded.
     form_params = [p for p in params if p.get("in") == "formData"]
-    has_body = bool(operation.get("requestBody"))
+    request_body = operation.get("requestBody")
+    has_body = bool(request_body)
+    # Most specs never set `required` on a request body, so the method
+    # decides: you do not POST, PUT or PATCH nothing, while a DELETE that
+    # declares a body almost never insists on one.
+    body_required = bool((request_body or {}).get("required")) or method in (
+        "post",
+        "put",
+        "patch",
+    )
 
     # Python needs every parameter without a default ahead of those with one,
     # so required arguments are collected separately and joined first.
@@ -168,7 +182,12 @@ def render(name: str, method: str, path: str, operation: dict) -> str:
         )
 
     if has_body:
-        required_args.append("body: dict")
+        # A body the spec marks optional stays optional: a DELETE that takes
+        # none must not demand one from the caller.
+        if body_required:
+            required_args.append("body: dict")
+        else:
+            args.append("body: dict | None = None")
         doc_args.append(
             "        body: Request payload. Read the matching GET or the "
             "/schema endpoint first to see the fields this resource expects."
