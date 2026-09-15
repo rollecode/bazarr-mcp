@@ -87,6 +87,37 @@ claude mcp add bazarr -- /path/to/bazarr-mcp/.venv/bin/bazarr-mcp
 
 Bazarr takes form fields rather than JSON bodies, and these tools send them that way. Settings are read and written whole through `list_system_settings` and `create_system_settings`.
 
+## Hosting it
+
+Running it over HTTP puts it in reach of Claude.ai as a custom connector, and of Claude Code on other machines. Three tiers, the same shape the other servers in this family use:
+
+| Tier | Port | What it does |
+| --- | --- | --- |
+| `bazarr-mcp` | 8560 | The server. No login of its own, never exposed |
+| nginx | 8561 | Front door, behind a Cloudflare Tunnel |
+| `auth-server.js` | 8562 | OAuth 2.1 sign-in, or a fixed bearer token |
+
+```bash
+npm install
+node set-password.js 'a password for the sign-in page'
+printf 'BAZARR_URL=...\n' > ~/.config/bazarr-mcp/env
+chmod 600 ~/.config/bazarr-mcp/env
+```
+
+Copy `systemd/*.service` into `/etc/systemd/system/`, replacing `YOUR_USER` and the `ISSUER` hostname, then:
+
+```bash
+sudo systemctl enable --now bazarr-mcp bazarr-mcp-auth
+```
+
+Point `nginx/bazarr-mcp.conf` at your own hostname and send the tunnel at `127.0.0.1:8561`.
+
+Environment the server itself reads: `BAZARR_URL, BAZARR_API_KEY`. The sign-in page carries the Bazarr mark and accent colour, set through `APP_NAME`, `APP_ACCENT` and `APP_BLURB` in the auth unit.
+
+### Claude.ai
+
+Settings, Connectors, Add custom connector, URL `https://bazarr-mcp.your-domain/mcp`, client ID and secret blank. The sign-in page asks for the password set above. Connectors belong to the account, so adding it once covers mobile too.
+
 ## Development
 
 ```bash

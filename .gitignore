@@ -3,3 +3,7 @@
 __pycache__/
 *.egg-info/
 uv.lock
+node_modules/
+bazarr-mcp.service
+bazarr-mcp-auth.service
+bazarr-mcp.conf
