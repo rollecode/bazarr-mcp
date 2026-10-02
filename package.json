@@ -1,6 +1,6 @@
 {
   "name": "bazarr-mcp",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Bazarr MCP server with OAuth 2.1, for Claude.ai custom connectors and Claude Code",
   "main": "auth-server.js",
   "scripts": {
